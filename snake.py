@@ -43,7 +43,7 @@ def Your_score(score):
     # дэлгэцэнд хэвлэнэ
     dis.blit(value, [0, 0])
 
-# могойн урт params ()
+# могойн урт params (нэг блокын урт болон могойн идсэн блокуудын лист)
 
 
 def our_snake(snake_block, snake_list):
@@ -61,7 +61,7 @@ def message(msg, color):
 # ерөнхий хэсэг
 
 
-def gameLoop():
+def gameLoop(snake_speed):
     # тоглоом дуусах эсвэл тоглоомоос гарах эсэхийг шийдэх утагууд
     game_over = False
     game_close = False
@@ -143,7 +143,7 @@ def gameLoop():
         #  могойн хөдөлгөөн хийх бүрт хамгийн сүүлийн утгыг арилгаж байна
         if len(snake_List) > Length_of_snake:
             del snake_List[0]
-        #
+        # өөрийгөө идсэн тохиолдолд үхнэ
         for x in snake_List[:-1]:
             if x == snake_Head:
                 game_close = True
@@ -152,14 +152,18 @@ def gameLoop():
         Your_score(Length_of_snake - 1)
         #  өөрчилнө утгуудаар update хийх хэсэг
         pygame.display.update()
+
         # идсэн тохиолдолд могойн уртыг нэмэх болоод дараагийн алимийг гаргах хэсэг
         if x1 == foodx and y1 == foody:
             foodx = round(random.randrange(
                 0, dis_width - snake_block) / 10.0) * 10.0
             foody = round(random.randrange(
                 0, dis_height - snake_block) / 10.0) * 10.0
+            # могойн уртыг нэмнэ
             Length_of_snake += 1
         # могойн хурдныг агшин бүрт өөрчилны delay үүсгэнэ
+        if Length_of_snake > 5:
+            snake_speed = 100
         clock.tick(snake_speed)
     #  нэг бүтэн үйлдэл хийж дуусна
     pygame.quit()
@@ -168,4 +172,4 @@ def gameLoop():
 
 
 # тоглоом ажиллаж эхлэх хэсэг
-gameLoop()
+gameLoop(snake_speed)
